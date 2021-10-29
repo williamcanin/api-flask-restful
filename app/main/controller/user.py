@@ -53,7 +53,6 @@ class UserPost(Resource):
                 "id": user.id,
                 "username": user.username,
                 "email": user.email,
-                "password": user.password_hash,
                 "superuser": user.superuser,
             }
         except IntegrityError as err:

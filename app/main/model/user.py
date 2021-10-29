@@ -18,6 +18,10 @@ class User(db.Model):
     def password_hash(self, password):
         self.password = crypt.hash(password)
 
+    @password_hash.getter
+    def password_hash(self):
+        return self.password
+
     def verify_password(self, password):
         if not crypt.verify(password, self.password):
             return False
