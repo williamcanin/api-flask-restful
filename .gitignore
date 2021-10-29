@@ -1,0 +1,13 @@
+__pycache__
+migrations
+temp/
+tmp/
+*.ipynb_checkpoints
+*.trash
+*.sqlite3
+*.bak
+*.db
+*.lock
+.env
+.envrc
+*.ipynb
