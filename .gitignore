@@ -8,6 +8,5 @@ tmp/
 *.bak
 *.db
 *.lock
-.env
 .envrc
 *.ipynb

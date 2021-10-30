@@ -7,6 +7,8 @@ class Config:
     SECRET_KEY = os.getenv("SECRET_KEY", "my_precious_secret_key")
     DEBUG = False
 
+# NOTE: Using "replace" for Heroku to recognize "postgresql://"
+
 
 class DevelopmentConfig(Config):
     DEBUG = True
