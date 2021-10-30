@@ -1,5 +1,5 @@
 __pycache__
-migrations
+# migrations
 temp/
 tmp/
 *.ipynb_checkpoints
