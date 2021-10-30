@@ -59,10 +59,13 @@ class AddUser(Resource):
             )
             user.save()
             response = {
-                "id": user.id,
-                "username": user.username,
-                "email": user.email,
-                "superuser": user.superuser,
+                "message": f"Success adding user.",
+                "data": {
+                    "id": user.id,
+                    "username": user.username,
+                    "email": user.email,
+                    "superuser": user.superuser,
+                }
             }
         except IntegrityError as err:
             response = {
