@@ -1,5 +1,5 @@
-from main import db
 from passlib.hash import sha256_crypt as crypt
+from main import db
 
 
 class User(db.Model):
@@ -7,25 +7,25 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, index=True)
     email = db.Column(db.String(64), unique=True)
-    password = db.Column(db.String(128))
+    password_hash = db.Column(db.String(128))
     superuser = db.Column(db.Boolean, default=False, nullable=False)
 
     @property
-    def password_hash(self):
+    def password(self):
         raise AttributeError("password not readable")
 
-    @password_hash.setter
-    def password_hash(self, password):
-        self.password = crypt.hash(password)
+    @password.setter
+    def password(self, password):
+        self.password_hash = crypt.hash(password)
 
-    @password_hash.getter
-    def password_hash(self):
-        return self.password
+    @password.getter
+    def password(self):
+        return self.password_hash
 
     def verify_password(self, password):
-        if not crypt.verify(password, self.password):
-            return False
-        return True
+        if crypt.verify(password, self.password_hash):
+            return True
+        return False
 
     def save(self):
         db.session.add(self)

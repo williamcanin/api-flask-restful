@@ -4,7 +4,7 @@ from main.settings import config_by_name
 from flask_migrate import Migrate
 from flask_cors import CORS
 from flask_restful import Api
-from main.commands import createsuperuser
+from main.cli.user import createsuperuser
 from main import db
 from main.model.user import User
 from main.controller.user import (

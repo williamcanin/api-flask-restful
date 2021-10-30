@@ -19,7 +19,7 @@ def verify_password(username, password):
 
 class Home(Resource):
     def get(self):
-        return {"message": "Hello"}
+        return {"message": "Welcome, to API"}
 
 
 class GetUser(Resource):
@@ -45,7 +45,7 @@ class UserPost(Resource):
             user = User(
                 username=data["username"],
                 email=data["email"],
-                password_hash=data["password"],
+                password=data["password"],
                 superuser=False,
             )
             user.save()
@@ -86,8 +86,8 @@ class DeleteUser(Resource):
         try:
             user = User.query.filter_by(id=id).first()
             if not user.superuser:
+                response = {"message": f"User id:{user.id} delete successfull"}
                 user.delete()
-                response = {"message": "Delete successfull"}
             else:
                 response = {"message": "The (superuser) user cannot be deleted."}
         except AttributeError as err:
@@ -98,25 +98,32 @@ class DeleteUser(Resource):
 class PutUser(Resource):
     @auth.login_required
     def put(self, username: str):
-        user = User.query.filter_by(username=username).first()
-        data = request.json
+        try:
+            user = User.query.filter_by(username=username).first()
+            data = request.json
 
-        if user.superuser:
-            response = {"message": "The (superuser) user cannot be deleted."}
-            return response
+            if user.superuser:
+                response = {"message": f"The user ({user.username}) cannot be changed from here."}
+                return response
 
-        if "username" in data:
-            user.username = data["username"]
-        if "email" in data:
-            user.email = data["email"]
-        if "password" in data:
-            user.password = crypt.hash(data["password"])
+            if "username" in data:
+                user.username = data["username"]
+            if "email" in data:
+                user.email = data["email"]
+            if "password" in data:
+                user.password = crypt.hash(data["password"])
 
-        user.save()
-        response = {
-            "id": user.id,
-            "username": user.username,
-            "email": user.email,
-            "superuser": user.superuser,
-        }
+            user.save()
+            response = {
+                "id": user.id,
+                "username": user.username,
+                "email": user.email,
+                "superuser": user.superuser,
+            }
+        except AttributeError as err:
+            response = {
+                "status": "AttributeError",
+                "message": str(err),
+            }
+
         return response
