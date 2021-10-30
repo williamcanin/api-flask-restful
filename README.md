@@ -40,7 +40,7 @@ poetry install
 ```shell
 echo "export FLASK_APP=app:app" >> .envrc
 echo "export FLASK_ENV=development" >> .envrc
-echo "export DATABASE_URL=postgresql://postgres:<PASSWORD>@localhost:5432/<DB_NAME>" >> .envrc
+echo "export DATABASE_URL=postgres://postgres:<PASSWORD>@localhost:5432/<DB_NAME>" >> .envrc
 echo "export SECRET_KEY=\"<YOUR_SECRET_KEY>\"" >> .envrc
 ```
 
