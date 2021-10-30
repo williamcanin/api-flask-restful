@@ -34,4 +34,4 @@ config_by_name = {
     "production": ProductionConfig,
 }
 
-# key = Config.SECRET_KEY
+key = Config.SECRET_KEY

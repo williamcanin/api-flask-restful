@@ -17,6 +17,15 @@ def verify_password(username, password):
     return False
 
 
+@auth.error_handler
+def unauthorized():
+    response = {
+        "status_code": 401,
+        "message": "Unauthorized user"
+    }
+    return response
+
+
 class Home(Resource):
     def get(self):
         return {"message": "Welcome, to API"}
@@ -37,7 +46,7 @@ class GetUser(Resource):
         return response
 
 
-class UserPost(Resource):
+class AddUser(Resource):
     @auth.login_required
     def post(self):
         data = request.json

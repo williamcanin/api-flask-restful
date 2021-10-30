@@ -10,6 +10,17 @@ class User(db.Model):
     password_hash = db.Column(db.String(128))
     superuser = db.Column(db.Boolean, default=False, nullable=False)
 
+    # @property
+    # def password(self):
+    #     raise AttributeError('password: write-only field')
+
+    # @password.setter
+    # def password(self, password):
+    #     self.password_hash = flask_bcrypt.generate_password_hash(password).decode('utf-8')
+
+    # def check_password(self, password: str) -> bool:
+    #     return flask_bcrypt.check_password_hash(self.password_hash, password)
+
     @property
     def password(self):
         raise AttributeError("password not readable")
@@ -18,14 +29,17 @@ class User(db.Model):
     def password(self, password):
         self.password_hash = crypt.hash(password)
 
-    @password.getter
-    def password(self):
-        return self.password_hash
-
     def verify_password(self, password):
         if crypt.verify(password, self.password_hash):
             return True
         return False
+
+    # @password.setter
+    # def password(self, password):
+    #     self.password_hash = flask_bcrypt.generate_password_hash(password).decode('utf-8')
+
+    # def check_password(self, password):
+    #     return flask_bcrypt.check_password_hash(self.password_hash, password)
 
     def save(self):
         db.session.add(self)

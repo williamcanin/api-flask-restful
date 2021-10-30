@@ -10,7 +10,7 @@ from main.model.user import User
 from main.controller.user import (
     Home,
     GetUser,
-    UserPost,
+    AddUser,
     UserAll,
     DeleteUser,
     PutUser
@@ -21,9 +21,16 @@ def create_app(config_name):
     app = Flask(__name__)
     app.config.from_object(config_by_name[config_name])
     db.init_app(app)
+    # flask_bcrypt.init_app(app)
+
+    # @app.errorhandler(404)
+    # def page_not_found(e):
+    #     return {
+    #         "message": "Route not found",
+    #         "status_code": 404
+    #     }
 
     with app.app_context():
-
         @app.cli.command('createsuperuser')
         def run_createsuperuser():
             createsuperuser(User)
@@ -37,10 +44,11 @@ migrate = Migrate(app, db)
 api = Api(app)
 CORS(app)
 
+
 # Routes
 api.add_resource(Home, "/")
 api.add_resource(UserAll, "/users/")
 api.add_resource(GetUser, "/user/<string:username>/")
-api.add_resource(UserPost, "/user/add/")
+api.add_resource(AddUser, "/user/add/")
 api.add_resource(DeleteUser, "/user/delete/<int:id>/")
 api.add_resource(PutUser, "/user/change/<string:username>/")
