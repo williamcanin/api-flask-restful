@@ -1,4 +1,4 @@
-from app.main import db
+from main import db
 from passlib.hash import sha256_crypt as crypt
 
 

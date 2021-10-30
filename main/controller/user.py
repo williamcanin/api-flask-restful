@@ -3,7 +3,7 @@ from flask_httpauth import HTTPBasicAuth
 from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
 from passlib.hash import sha256_crypt as crypt
-from app.main.model.user import User
+from main.model.user import User
 
 
 auth = HTTPBasicAuth()

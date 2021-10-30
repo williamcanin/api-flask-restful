@@ -1,13 +1,13 @@
 import os
 from flask import Flask
-from app.main.settings import config_by_name
+from main.settings import config_by_name
 from flask_migrate import Migrate
 from flask_cors import CORS
 from flask_restful import Api
-from app.main.commands import createsuperuser
-from app.main import db
-from app.main.model.user import User
-from app.main.controller.user import (
+from main.commands import createsuperuser
+from main import db
+from main.model.user import User
+from main.controller.user import (
     Home,
     GetUser,
     UserPost,
