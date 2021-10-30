@@ -21,14 +21,13 @@ def create_app(config_name):
     app = Flask(__name__)
     app.config.from_object(config_by_name[config_name])
     db.init_app(app)
-    # flask_bcrypt.init_app(app)
 
-    # @app.errorhandler(404)
-    # def page_not_found(e):
-    #     return {
-    #         "message": "Route not found",
-    #         "status_code": 404
-    #     }
+    @app.errorhandler(404)
+    def page_not_found(e):
+        return {
+            "message": "Route not found",
+            "status_code": 404
+        }
 
     with app.app_context():
         @app.cli.command('createsuperuser')

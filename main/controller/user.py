@@ -54,7 +54,7 @@ class AddUser(Resource):
             user = User(
                 username=data["username"],
                 email=data["email"],
-                password=data["password"],
+                password_hash=data["password"],
                 superuser=False,
             )
             user.save()
