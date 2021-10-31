@@ -1,0 +1,4 @@
+export FLASK_APP=app:app
+export FLASK_ENV=development
+export DATABASE_URL=postgres://<USER>:<PASSWORD>@<HOST>:5432/<DB_NAME>
+export SECRET_KEY="<YOUR_SECRET_KEY>"
