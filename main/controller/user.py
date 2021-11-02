@@ -1,4 +1,4 @@
-from flask import request
+from flask import request, abort
 from flask_httpauth import HTTPBasicAuth
 from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
@@ -33,7 +33,7 @@ class Home(Resource):
 
 class GetUser(Resource):
     def get(self, username: str):
-        user = User.query.filter_by(username=username).first()
+        user = User.query.filter_by(username=username).first() or abort(404, "Usuário não encontrado")
         try:
             response = {
                 "id": user.id,
@@ -59,7 +59,7 @@ class AddUser(Resource):
             )
             user.save()
             response = {
-                "message": f"Success adding user.",
+                "message": "Success adding user.",
                 "data": {
                     "id": user.id,
                     "username": user.username,
@@ -96,7 +96,7 @@ class DeleteUser(Resource):
     @auth.login_required
     def delete(self, id):
         try:
-            user = User.query.filter_by(id=id).first()
+            user = User.query.filter_by(id=id).first() or abort(404, "ID não encontrado")
             if not user.superuser:
                 response = {"message": f"User id:{user.id} delete successfull"}
                 user.delete()
@@ -111,7 +111,7 @@ class PutUser(Resource):
     @auth.login_required
     def put(self, username: str):
         try:
-            user = User.query.filter_by(username=username).first()
+            user = User.query.filter_by(username=username).first() or abort(404, "Usuário encontrado")
             data = request.json
 
             if user.superuser:
