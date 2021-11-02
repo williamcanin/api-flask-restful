@@ -1,21 +1,21 @@
 import sys
 import getpass
 from passlib.hash import sha256_crypt as crypt
+from main.model.user import User
 from sqlalchemy.exc import IntegrityError
 
 
-def input_loop(message, password=False):
-    while True:
-        if not password:
-            data = input(message)
-        else:
-            data = getpass.getpass(message)
-        if data or data is None:
-            break
-    return data
+def createsuperuser():
+    def input_loop(message, password=False):
+        while True:
+            if not password:
+                data = input(message)
+            else:
+                data = getpass.getpass(message)
+            if data or data is None:
+                break
+        return data
 
-
-def createsuperuser(User):
     print("<<< Create superuser >>>\n")
     try:
         username = input_loop("Enter username: ")
@@ -38,3 +38,11 @@ def createsuperuser(User):
             print(">>> [ERROR] This user already exists.")
         elif f"({email}) already exists" in str(err.orig):
             print(">>> [ERROR] Cannot have more than one user with the same email.")
+
+
+def init_app(app):
+    list_func = [
+        createsuperuser
+    ]
+    for cmd in list_func:
+        app.cli.add_command(app.cli.command()(cmd))

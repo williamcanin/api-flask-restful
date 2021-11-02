@@ -4,9 +4,9 @@ from main.settings import config_by_name
 from flask_migrate import Migrate
 from flask_cors import CORS
 from flask_restful import Api
-from main.cli.user import createsuperuser
 from main import db
-from main.model.user import User
+from main.cli import user as user_cli
+from main.utils import errors as app_erros
 from main.controller.user import (
     Home,
     GetUser,
@@ -21,18 +21,8 @@ def create_app(config_name):
     app = Flask(__name__)
     app.config.from_object(config_by_name[config_name])
     db.init_app(app)
-
-    @app.errorhandler(404)
-    def page_not_found(e):
-        return {
-            "message": "Route not found",
-            "status_code": 404
-        }
-
-    with app.app_context():
-        @app.cli.command('createsuperuser')
-        def run_createsuperuser():
-            createsuperuser(User)
+    user_cli.init_app(app)
+    app_erros.init_app(app)
 
     return app
 
