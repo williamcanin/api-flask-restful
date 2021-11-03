@@ -17,5 +17,5 @@ def create_app(environment):
 
 app = create_app(os.getenv('FLASK_ENV'))
 app.app_context().push()
-migrate = Migrate(app, db)
+Migrate(app, db)
 CORS(app)
