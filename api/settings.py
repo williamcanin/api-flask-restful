@@ -6,31 +6,23 @@ from flask_restful import Api
 BASEDIR = os.path.abspath(os.path.dirname(__file__))
 
 
-class Base:
-    def __init__(self, init_app_list: list, resources_list: list):
-        self.init_app_list = init_app_list
-        self.resources_list = resources_list
+class Register:
+    def __init__(self, app, data: dict):
 
-    def init_app(self, app):
-        if self.init_app_list:
-            for item in self.init_app_list:
-                module_name, function = item.split(":")
-                mod = import_module(module_name)
-                getattr(mod, function)(app)
+        # Split: module name, function, route
+        if "init_app" in data:
+            for item in data["init_app"]:
+                m, f = item.split(":")
+                set_mod = import_module(m)
+                getattr(set_mod, f)(app)
 
-    def resources(self, app):
-        if self.resources_list:
-            for item in self.resources_list:
-                # Split: module name, function, route
+        if "resources" in data:
+            for item in data["resources"]:
                 m, f, r = item.split("|")
                 set_mod = import_module(m)
                 attr_mod = getattr(set_mod, f)
                 api = Api(app)
                 api.add_resource(attr_mod, r)
-
-    def register(self, app):
-        self.init_app(app)
-        self.resources(app)
 
 
 class Config:

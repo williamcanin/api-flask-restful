@@ -23,11 +23,6 @@ def unauthorized():
     return response
 
 
-class Home(Resource):
-    def get(self):
-        return {"message": "Welcome, to API"}
-
-
 class GetUser(Resource):
     def get(self, username: str):
         user = User.query.filter_by(username=username).first() or abort(404, "Usuário não encontrado")
