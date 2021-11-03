@@ -14,15 +14,6 @@ def verify_password(username, password):
     return False
 
 
-@auth.error_handler
-def unauthorized():
-    response = {
-        "status_code": 401,
-        "message": "Unauthorized user"
-    }
-    return response
-
-
 class GetUser(Resource):
     def get(self, username: str):
         user = User.query.filter_by(username=username).first() or abort(404, "Usuário não encontrado")
