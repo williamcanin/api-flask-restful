@@ -15,9 +15,8 @@ def create_app(environment):
     app = Flask(__name__)
     app.config.from_object(settings.environment[environment])
     db.init_app(app)
-    settings.Base(["api.utils.errors:init_app"], []).register_apps(app)
-    users.register_apps(app)
-    users.register_resources(app)
+    settings.Base(["api.utils.errors:init_app"], []).register(app)
+    users.register(app)
     return app
 
 

@@ -11,14 +11,14 @@ class Base:
         self.init_app_list = init_app_list
         self.resources_list = resources_list
 
-    def register_apps(self, app):
+    def init_app(self, app):
         if self.init_app_list:
             for item in self.init_app_list:
                 module_name, function = item.split(":")
                 mod = import_module(module_name)
                 getattr(mod, function)(app)
 
-    def register_resources(self, app):
+    def resources(self, app):
         if self.resources_list:
             for item in self.resources_list:
                 # Split: module name, function, route
@@ -27,6 +27,10 @@ class Base:
                 attr_mod = getattr(set_mod, f)
                 api = Api(app)
                 api.add_resource(attr_mod, r)
+
+    def register(self, app):
+        self.init_app(app)
+        self.resources(app)
 
 
 class Config:
