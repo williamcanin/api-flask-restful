@@ -12,10 +12,10 @@ def create_app(environment):
     app.config.from_object(settings.environment[environment])
     db.init_app(app)
     settings.Register(app, data=registers)
+    app.app_context().push()
+    Migrate(app, db)
+    CORS(app)
     return app
 
 
 app = create_app(os.getenv('FLASK_ENV'))
-app.app_context().push()
-Migrate(app, db)
-CORS(app)
