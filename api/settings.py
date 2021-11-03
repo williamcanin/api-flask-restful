@@ -1,6 +1,20 @@
 import os
+from importlib import import_module
 
 basedir = os.path.abspath(os.path.dirname(__file__))
+
+
+init_app_list = [
+    "api.cli.user:init_app",
+    "api.utils.errors:init_app",
+]
+
+
+def init_apps(app):
+    for item in init_app_list:
+        module_name, function = item.split(":")
+        mod = import_module(module_name)
+        getattr(mod, function)(app)
 
 
 class Config:

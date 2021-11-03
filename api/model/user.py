@@ -1,5 +1,5 @@
 from passlib.hash import sha256_crypt as crypt
-from main import db
+from api import db
 
 
 class User(db.Model):

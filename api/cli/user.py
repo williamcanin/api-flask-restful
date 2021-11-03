@@ -1,7 +1,7 @@
 import sys
 import getpass
 from passlib.hash import sha256_crypt as crypt
-from main.model.user import User
+from api.model.user import User
 from sqlalchemy.exc import IntegrityError
 
 
