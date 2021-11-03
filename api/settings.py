@@ -1,20 +1,38 @@
 import os
 from importlib import import_module
+from flask_restful import Api
 
-basedir = os.path.abspath(os.path.dirname(__file__))
-
-
-init_app_list = [
-    "api.cli.user:init_app",
-    "api.utils.errors:init_app",
-]
+# BASEDIR = os.path.abspath(os.path.dirname(__file__))
 
 
-def init_apps(app):
-    for item in init_app_list:
-        module_name, function = item.split(":")
-        mod = import_module(module_name)
-        getattr(mod, function)(app)
+class Base:
+    def __init__(self):
+        self.init_app_list = [
+            "api.cli.user:init_app",
+            "api.utils.errors:init_app",
+        ]
+        self.resources_list = [
+            "api.controller.user|Home|/",
+            "api.controller.user|GetUser|/user/<string:username>/",
+            "api.controller.user|UserAll|/users/",
+            "api.controller.user|AddUser|/user/add/",
+            "api.controller.user|DeleteUser|/user/delete/<int:id>/",
+            "api.controller.user|PutUser|/user/change/<string:username>/",
+        ]
+
+    def init_apps(self, app):
+        for item in self.init_app_list:
+            module_name, function = item.split(":")
+            mod = import_module(module_name)
+            getattr(mod, function)(app)
+
+    def resources_import(self, app):
+        for item in self.resources_list:
+            m, f, r = item.split("|")
+            mod = import_module(m)
+            attr = getattr(mod, f)
+            api = Api(app)
+            api.add_resource(attr, r)
 
 
 class Config:
@@ -49,5 +67,3 @@ config_by_name = {
     "test": TestingConfig,
     "production": ProductionConfig,
 }
-
-key = Config.SECRET_KEY
