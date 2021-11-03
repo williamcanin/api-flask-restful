@@ -11,7 +11,6 @@ def create_app(config_name):
     app.config.from_object(settings.config_by_name[config_name])
     db.init_app(app)
     settings.Base().init_apps(app)
-
     return app
 
 
