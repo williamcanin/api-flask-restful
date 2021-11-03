@@ -1,12 +1,9 @@
 from flask import request, abort
-from flask_httpauth import HTTPBasicAuth
 from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
 from passlib.hash import sha256_crypt as crypt
-from api.model.user import User
-
-
-auth = HTTPBasicAuth()
+from api.utils.auth import auth
+from api.users.model import User
 
 
 @auth.verify_password

@@ -1,8 +1,8 @@
 import sys
 import getpass
 from passlib.hash import sha256_crypt as crypt
-from api.model.user import User
 from sqlalchemy.exc import IntegrityError
+from api.users.model import User
 
 
 def createsuperuser():
@@ -41,8 +41,6 @@ def createsuperuser():
 
 
 def init_app(app):
-    list_func = [
-        createsuperuser
-    ]
+    list_func = [createsuperuser]
     for cmd in list_func:
         app.cli.add_command(app.cli.command()(cmd))
