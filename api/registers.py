@@ -5,10 +5,10 @@ registers = {
     ],
     "resources": [
         "api.home.resources|Home|/",
-        "api.users.resources|GetUser|/user/<string:username>/",
+        "api.users.resources|GetUser|/users/<string:username>/",
         "api.users.resources|UserAll|/users/",
-        "api.users.resources|AddUser|/user/add/",
-        "api.users.resources|DeleteUser|/user/delete/<int:id>/",
-        "api.users.resources|PutUser|/user/change/<string:username>/",
+        "api.users.resources|AddUser|/users/add/",
+        "api.users.resources|DeleteUser|/users/delete/<int:id>/",
+        "api.users.resources|PutUser|/users/change/<string:username>/",
     ]
 }
