@@ -4,7 +4,7 @@ Simple API using [Flask](https://flask.palletsprojects.com/en/2.0.x/).
 
 # Requirements
 
-* Python >= 3.9
+* Python = 3.9
 * Poetry >= 1.1
 * Direnv
 * Linux/Mac
@@ -31,9 +31,12 @@ postgres=# \q
 2 - Install dependencies:
 
 ```shell
+poetry env use 3.9.9
 poetry shell
 poetry install
 ```
+
+> Note: Use [pyenv](https://github.com/pyenv/pyenv) to install specific version of Python.
 
 3 - Set variables environment:
 
