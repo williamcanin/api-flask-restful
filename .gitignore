@@ -10,3 +10,4 @@ tmp/
 *.lock
 .envrc
 *.ipynb
+.idea
